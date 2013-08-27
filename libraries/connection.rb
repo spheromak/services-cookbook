@@ -122,7 +122,7 @@ module Services
       else
         c = try_connect host
       end
-      #raise RuntimeError, "Unable to get a valid connection to Etcd" unless c
+      raise RuntimeError, "Unable to get a valid connection to Etcd" unless c
       c
     end
 
@@ -139,8 +139,6 @@ module Services
       rescue
         return nil
       end
-      raise "Couldn't connect to etcd" unless c
-      c
     end
 
   end
