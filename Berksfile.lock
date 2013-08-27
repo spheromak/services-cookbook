@@ -1,0 +1,24 @@
+{
+  "sources": {
+    "services": {
+      "path": "."
+    },
+    "apt": {
+      "locked_version": "2.0.0"
+    },
+    "curl": {
+      "locked_version": "1.1.0"
+    },
+    "etcd": {
+      "locked_version": "1.2.3",
+      "git": "git://github.com/spheromak/etcd-cookbook.git",
+      "ref": "8a869a61a2189d90db49e1f1f6eb160c4b482dfd"
+    },
+    "services_test": {
+      "path": "./test/cookbooks/services_test"
+    },
+    "ark": {
+      "locked_version": "0.3.0"
+    }
+  }
+}
