@@ -9,6 +9,7 @@ module Services
       @ip = args[:ip] || ""
       @proto = args[:proto] || "http"
       @port  = args[:port]  || 80
+      @weight = args[:weight]
       @service = args[:service]
       @path = "#{service}/members/#{name}"
       super
