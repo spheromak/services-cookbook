@@ -49,9 +49,10 @@ module Services
       return unless valid_path
       to_hash.each do |k, v|
         next if k == "name"
-        value =  Services.get("#{KEY}/#{path}/#{k}").value || nil
-        self.send "#{k}=", value.to_s
+        value =  Services.get("#{KEY}/#{path}/#{k}").value
+        self.instance_variable_set "@#{k}", value
       end
+      self
     end
 
     def valid_path

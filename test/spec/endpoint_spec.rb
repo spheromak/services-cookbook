@@ -17,6 +17,7 @@ describe "Services::Endpoint" do
 
   describe "#store" do
     it "should store" do
+      puts "storing #{@ep.inspect}"
       @ep.store
     end
   end
@@ -26,14 +27,20 @@ describe "Services::Endpoint" do
       @ep = Services::Endpoint.new "test"
     end
 
+    it "should handle no endpoint" do
+      e = Services::Endpoint.new "test_endpoint_fail"
+      e.load
+    end
+
     it "should load" do
       @ep.load
       @ep.to_hash.should == @ep_data
     end
 
-    it "should handle no endpoint" do
-      e = Services::Endpoint.new "test_endpoint_fail"
-      e.load
+    it "should get ip" do
+      @ep.ip.should == ""
+      @ep.load
+      @ep.ip.should == "127.0.0.1"
     end
 
   end
