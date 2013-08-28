@@ -30,6 +30,7 @@ module Services
     def load_endpoint
       endpoint = Services::Endpoint.new name
       endpoint.load
+      endpoint
     end
 
     def load_members
