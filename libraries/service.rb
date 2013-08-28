@@ -41,7 +41,8 @@ module Services
       unless m.nil? or m.empty?
         m.each do |m|
           m_name = File.basename m.key
-          m1 = Services::Member.new(m_name, service: name).load
+          m1 = Services::Member.new(m_name, service: name)
+          m1.load
           members.push m1
         end
       end
