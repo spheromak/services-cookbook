@@ -1,9 +1,9 @@
 describe "Services::Member" do
   before(:each) do
-    @m_data ={"name"=>"test_member", "ip"=>"127.0.0.2", "proto"=>"http", "port"=>"80", "service"=>"test"}
+    @m_data ={"ip"=>"127.0.0.2", "proto"=>"http", "port"=>"80", "weight"=>"20", "service"=>"test", "name"=>"test_member"}
     Services::Connection.new host: "localhost"
-    @m = Services::Member.new "test_member", service: "test", ip: '127.0.0.2', port: 80
-    @m2 = Services::Member.new "test_member2", service: "test", ip: '127.0.0.3', port: 80
+    @m = Services::Member.new "test_member", service: "test", ip: '127.0.0.2', port: 80, weight: 20
+    @m2 = Services::Member.new "test_member2", service: "test", ip: '127.0.0.3', port: 80, weight: 20
   end
 
   it "should raise without a service name" do

@@ -21,9 +21,7 @@ module Services
       begin
         s = Services.get "#{KEY}/#{name}"
       rescue Net::HTTPServerException => e
-        puts "rescued"
         if e.message.match "Not Found"
-          puts "rescued; create #{KEY}/#{name}/_created -> #{Time.now}"
           Services.set "#{KEY}/#{name}/_created", Time.now
         end
       end
@@ -42,7 +40,7 @@ module Services
       end
       unless m.nil? or m.empty?
         m.each do |m|
-          m_name = File.basename m["key"]
+          m_name = File.basename m.key
           m1 = Services::Member.new(m_name, service: name).load
           members.push m1
         end

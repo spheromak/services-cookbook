@@ -1,6 +1,6 @@
 describe "Services::Service" do
   before(:each) do
-    @s_members = [{"ip"=>"", "proto"=>"http", "port"=>"80", "service"=>"test", "name"=>"test_member"}, {"ip"=>"", "proto"=>"http", "port"=>"80", "service"=>"test", "name"=>"test_member2"}]
+    @s_members =  [{"ip"=>"", "proto"=>"http", "port"=>"80", "weight"=>"20", "service"=>"test", "name"=>"test_member"}, {"ip"=>"", "proto"=>"http", "port"=>"80", "weight"=>"20", "service"=>"test", "name"=>"test_member2"}]
     Services::Connection.new host: "localhost"
     @s = Services::Service.new "test"
   end

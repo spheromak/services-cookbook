@@ -4,12 +4,12 @@ require_relative "entity"
 module Services
   class Member < Services::Entity
 
-    attr_accessor :ip, :port, :proto, :service
+    attr_accessor :ip, :port, :proto, :service, :weight
     def initialize(name, args = {})
       @ip = args[:ip] || ""
       @proto = args[:proto] || "http"
       @port  = args[:port]  || 80
-      @weight = args[:weight]
+      @weight = args[:weight] || 20
       @service = args[:service]
       @path = "#{service}/members/#{name}"
       super
