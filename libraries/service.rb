@@ -9,6 +9,7 @@ module Services
     def initialize(name)
       @name = name
       @members = []
+      @endpoint = Services::Endpoint.new name
 
       create_if_missing
       load_members
@@ -28,7 +29,6 @@ module Services
     end
 
     def load_endpoint
-      endpoint = Services::Endpoint.new name
       endpoint.load
       endpoint
     end
