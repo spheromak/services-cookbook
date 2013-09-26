@@ -18,11 +18,12 @@ suites:
 - name: default
   run_list:
     - recipe[curl]
-    - recipe[etcd]
+    - recipe[etcd::compile_time]
     - recipe[services_test::client]
     - recipe[services]
   attributes: 
     etcd:
+      args: -c 127.0.0.1:4001 -s 127.0.0.1:7001
       servers:
         - 127.0.0.1
 
