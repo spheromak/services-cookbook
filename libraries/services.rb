@@ -28,7 +28,7 @@ module Services
       connection.set *args
     end
 
-    def list_services
+    def all
       services = Array.new
       get(KEY).each do |s|
         name = File.basename s.key
