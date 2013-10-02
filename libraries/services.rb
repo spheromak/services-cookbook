@@ -27,5 +27,14 @@ module Services
     def set(*args)
       connection.set *args
     end
+
+    def list_services
+      services = Array.new
+      get(KEY).each do |s|
+        name = File.basename s.key
+        services << Services::Service.new(name)
+      end
+      services
+    end
   end
 end
