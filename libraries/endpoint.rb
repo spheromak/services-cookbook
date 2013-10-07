@@ -8,7 +8,6 @@ module Services
       @proto = args[:proto] || "http"
       @port  = args[:port]  || 80
       @path  = "#{name}/endpoint"
-      @options = args[:options]
       super
     end
 
