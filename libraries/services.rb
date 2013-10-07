@@ -18,14 +18,37 @@ module Services
   # Share a connection between all classess using this module
   #
   class << self
-    attr_accessor :connection
+    attr_accessor :connection, :run_context
 
     def get(*args)
+      puts "connection.get args #{args}"
       connection.get *args
     end
 
     def set(*args)
+      puts "connection.set args #{args}"
       connection.set *args
+    end
+
+    # return a list of all services
+    def all
+      services = Array.new
+      get(KEY).each do |s|
+        name = File.basename s.key
+        services << Services::Service.new(name)
+      end
+      services
+    end
+
+    # return all services a node is subscribed to
+    def subscribed f=nil
+      if f.nil? and run_context.nil?
+          raise "param and run_context can not both be nil"
+      end
+
+      fqdn = f.nil? ? rteraun_context.node.fqdn : f
+      services = all.map { |s| s.members.include?(fqdn) ? s : nil }
+      services.compact
     end
   end
 end
