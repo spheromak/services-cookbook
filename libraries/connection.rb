@@ -27,6 +27,7 @@ module Services
     # @option args [String] :port (4001) The etcd port to connect too
     def initialize(args)
       @run_context = args[:run_context]
+      Services.run_context = args[:run_context]
       @node = args[:run_context].node if run_context
       @host = args[:host]
       @port = args[:port] || 4001
