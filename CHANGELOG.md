@@ -1,6 +1,11 @@
+### 1.1.1
+* bugfix remove of options attr from endoint
+* cleanup tailor issues
+
 ### 1.1.0
 * add all method to services that returns an array of all services
 * add subscribed method to services that returns array of all services a node is mapped too
+
 ### 1.0.6
 * revert naming change
 

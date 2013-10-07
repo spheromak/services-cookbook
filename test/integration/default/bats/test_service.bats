@@ -13,15 +13,18 @@ tcp
 testing'
 @test "service endpoint should be registered" {
   res=$($etcdctl get /services/testing/endpoint)
+  echo "$res"
   [ "$endpoint" == "$res" ]
 }
 
 @test "member1 data" {
   res=$($etcdctl get /services/testing/members/member1)
+  echo "$res"
   [ "$member1" == "$res" ]
 }
 
 @test "member2 data" {
   res=$($etcdctl get /services/testing/members/member2)
+  echo "$res"
   [ "$member2" == "$res" ]
 }
