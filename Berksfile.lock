@@ -16,7 +16,7 @@
       "path": "./test/cookbooks/services_test"
     },
     "ark": {
-      "locked_version": "0.3.2"
+      "locked_version": "0.3.0"
     }
   }
 }

@@ -43,7 +43,7 @@ module Services
     # return all services a node is subscribed to
     def subscribed f=nil
       if f.nil? and run_context.nil?
-          raise "param and run_context can not both be nil"
+        raise "param and run_context can not both be nil"
       end
 
       fqdn = f.nil? ? rteraun_context.node.fqdn : f
