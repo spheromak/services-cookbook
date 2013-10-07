@@ -1,4 +1,4 @@
 name    "services"
-version "1.0.10"
+version "1.1.1"
 
 recommends "etcd"
