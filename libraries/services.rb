@@ -21,12 +21,10 @@ module Services
     attr_accessor :connection, :run_context
 
     def get(*args)
-      puts "connection.get args #{args}"
       connection.get *args
     end
 
     def set(*args)
-      puts "connection.set args #{args}"
       connection.set *args
     end
 
