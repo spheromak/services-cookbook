@@ -1,3 +1,8 @@
+### 1.2.0
+* switch to rubocop
+* update etcd gem to 0.0.6
+* compatable with etcd 0.2.0 & 0.3.0
+
 ### 1.1.1
 * bugfix remove of options attr from endoint
 * cleanup tailor issues
