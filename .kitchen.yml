@@ -3,16 +3,8 @@ driver_plugin: vagrant
 provisioner: chef_zero
 
 platforms:
-- name: centos-6.4_chef-11.4.4
-  driver_config: 
-    box: opscode-centos-6.4_chef-11.4.4
-    box_url:  https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_chef-11.4.4.box
-- name: ubuntu-12.04_chef-11.4.4
-  run_list: recipe[apt]
-  driver_config:
-    box: opscode-ubuntu-12.04_chef-11.4.4
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.4.4.box
-
+- name: centos-6.4
+- name: ubuntu-12.04
 
 suites:
 - name: default
@@ -21,12 +13,20 @@ suites:
     - recipe[etcd::compile_time]
     - recipe[services_test::client]
     - recipe[services]
-  attributes: 
+  attributes:
     etcd:
-      args: -c 127.0.0.1:4001 -s 127.0.0.1:7001
+      upstart:
+        start_on: 'runlevel [2345]'
+        stop_on: 'runlevel [!2345]'
       servers:
         - 127.0.0.1
 
-clusters:
-  default:
-    - default
+- name: blank
+  run_list:
+    - recipe[etcd::compile_time]
+    - recipe[services_test::blank]
+    - recipe[services]
+  attributes:
+    etcd:
+      servers:
+        - 127.0.0.1

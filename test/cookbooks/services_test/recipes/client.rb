@@ -1,7 +1,7 @@
 include_recipe "etcd"
 include_recipe "services"
 
-# delay this here, because this assumees that eetcd is up and available.
+# delay this here, because this assumes that etcd is up and available.
 # in normal infra etcd service should be up and running someplace, and
 # the need to delay shouldn't be requred.
 ruby_block "delayed service registry" do

@@ -9,7 +9,7 @@ metadata
 group :integration do
   cookbook 'apt'
   cookbook 'curl'
-  cookbook 'etcd'
+  cookbook 'etcd', '>= 2.1.1'
   cookbook 'services_test',
     path: "test/cookbooks/services_test"
 end

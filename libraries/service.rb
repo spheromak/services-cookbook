@@ -1,10 +1,9 @@
 module Services
   # service container
   class Service
-
-    attr :name
-    attr :members
-    attr :endpoint
+    attr_reader :name
+    attr_reader :members
+    attr_reader :endpoint
 
     def initialize(name)
       @name = name
@@ -22,7 +21,7 @@ module Services
       begin
         s = Services.get "#{KEY}/#{name}"
       rescue Net::HTTPServerException => e
-        if e.message.match "Not Found"
+        if e.message.match 'Not Found'
           Services.set "#{KEY}/#{name}/_created", Time.now
         end
       end

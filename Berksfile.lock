@@ -4,19 +4,46 @@
       "path": "."
     },
     "apt": {
-      "locked_version": "2.1.1"
+      "locked_version": "2.2.1"
     },
     "curl": {
       "locked_version": "1.1.0"
     },
     "etcd": {
-      "locked_version": "1.3.1"
+      "locked_version": "2.1.1"
     },
     "services_test": {
       "path": "./test/cookbooks/services_test"
     },
     "ark": {
-      "locked_version": "0.3.0"
+      "locked_version": "0.4.2"
+    },
+    "partial_search": {
+      "locked_version": "1.0.6"
+    },
+    "git": {
+      "locked_version": "2.9.1"
+    },
+    "dmg": {
+      "locked_version": "2.0.4"
+    },
+    "build-essential": {
+      "locked_version": "1.4.2"
+    },
+    "windows": {
+      "locked_version": "1.12.6"
+    },
+    "chef_handler": {
+      "locked_version": "1.1.4"
+    },
+    "runit": {
+      "locked_version": "1.5.9"
+    },
+    "yum": {
+      "locked_version": "3.0.4"
+    },
+    "yum-epel": {
+      "locked_version": "0.2.0"
     }
   }
 }

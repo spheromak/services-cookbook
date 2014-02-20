@@ -5,10 +5,10 @@ module Services
   # Most other classes require this to be setup
   #
   class Connection
-    attr :node, :run_context, :client, :host, :port
+    attr_reader :node, :run_context, :client, :host, :port
 
     if defined?(Chef) == 'constant' && Chef.class == Class
-      if Chef::Version.new(Chef::VERSION) <= Chef::Version.new("11.0.0")
+      if Chef::Version.new(Chef::VERSION) <= Chef::Version.new('11.0.0')
         include ::Chef::Mixin::Language
       else
         include ::Chef::DSL::DataQuery
@@ -45,8 +45,8 @@ module Services
     # We require run_context OR host to function
     #
     def validate
-      unless run_context or host
-        raise ArgumentError, "Must provide a run_context OR host to initialize"
+      unless run_context || host
+        fail ArgumentError, 'Must provide a run_context OR host to initialize'
       end
     end
 
@@ -57,19 +57,18 @@ module Services
     #
     def load_gem
       begin
-        require "etcd"
+        require 'etcd'
       rescue LoadError
         if run_context
-          Chef::Log.info "etcd gem not found. attempting to install"
-          g = Chef::Resource::ChefGem.new "etcd", run_context
-          g.version "0.0.4"
+          Chef::Log.info 'etcd gem not found. attempting to install'
+          g = Chef::Resource::ChefGem.new 'etcd', run_context
+          g.version '0.0.6'
           run_context.resource_collection.insert g
           g.run_action :install
-          require "etcd"
+          require 'etcd'
         end
       end
     end
-
 
     #
     # Find other Etd Servers by looking at node attributes or via Chef Search
@@ -78,11 +77,11 @@ module Services
       # need a run_context to find anything in
       return nil unless run_context
       # If there are already servers in attribs use those
-      if node.has_key? :etcd and node[:etcd].has_key? :servers
+      if node.key? :etcd and node[:etcd].key? :servers
         return node[:etcd][:servers]
       end
       # if we have already searched in this run use those
-      if node.run_state.has_key? :etcd_servers
+      if node.run_state.key? :etcd_servers
         return node.run_state[:etcd_servers]
       end
 
@@ -90,7 +89,7 @@ module Services
       etcd_nodes = search(:node, search_query)
       servers = etcd_nodes.map { |n| n[:ipaddress] }
 
-      #store that in the run_state
+      # store that in the run_state
       node.run_state[:etcd_servers] = servers
     end
 
@@ -101,7 +100,7 @@ module Services
     #
     def search_query
       query = "(chef_environment:#{node.chef_environment} "
-      query << "AND recipes:etcd) "
+      query << 'AND recipes:etcd) '
       if node[:etcd][:recipe]
         query << "OR (chef_environment:#{node.chef_environment} "
         query << "AND #{node[:etcd][:search_term]})"
@@ -114,7 +113,7 @@ module Services
     # If given an arry of servers then try each until we
     # connect
     #
-    def get_connection(servers=nil)
+    def get_connection(servers = nil)
       c = nil
       if servers
         servers.each do |s|
@@ -124,7 +123,7 @@ module Services
       else
         c = try_connect host
       end
-      raise RuntimeError, "Unable to get a valid connection to Etcd" unless c
+      fail RuntimeError, 'Unable to get a valid connection to Etcd' unless c
       c
     end
 
@@ -135,13 +134,13 @@ module Services
     #
     def try_connect(server)
       c = ::Etcd.client(host: server, port: port)
+      puts "ETCD: trying to connect to #{c.host}:#{c.port}"
       begin
-        c.get "/_etcd/machines"
+        c.get '/_etcd/machines'
         return c
       rescue
         return nil
       end
     end
-
   end
 end

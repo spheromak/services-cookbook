@@ -1,3 +1,4 @@
+require_relative "spec_helper"
 describe "Services::Service" do
   before(:each) do
     @s_members = [
