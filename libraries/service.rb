@@ -30,24 +30,22 @@ module Services
       endpoint
     end
 
+    # rubocop:disable MethodLength
     def load_members
-      etcd_members = load_etcd_members
+      begin
+        etcd_members = Services.get "#{KEY}/#{name}/members"
+      rescue Net::HTTPServerException => e
+        etcd_members = nil if e.message.match 'Not Found'
+      end
+
       unless etcd_members.nil? || etcd_members.empty?
-        etcd_members.each do |m|
-          m_name = File.basename m.key
+        etcd_members.node.nodes.each do |m|
+          m_name = File.basename m['key']
           m1 = Services::Member.new(m_name, service: name)
           m1.load
-          members.push m1
+          @members.push m1
         end
       end
-    end
-
-    private
-
-    def load_etcd_members
-      Services.get "#{KEY}/#{name}/members"
-    rescue
-      nil
     end
   end
 end

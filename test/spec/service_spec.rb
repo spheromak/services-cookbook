@@ -1,20 +1,19 @@
 require_relative "spec_helper"
 describe "Services::Service" do
-  before(:each) do
-    @s_members = [
-      {"ip"=>"127.0.0.2", "proto"=>"http", "port"=>"80", "weight"=>"20", "service"=>"test", "name"=>"test_member"},
-      {"ip"=>"127.0.0.3", "proto"=>"http", "port"=>"80", "weight"=>"20", "service"=>"test", "name"=>"test_member2"}
-    ]
-    Services::Connection.new host: "localhost"
-    @s = Services::Service.new "test"
-  end
+  let(:c) { Services::Connection.new host: "localhost" }
+  let(:m1) { Services::Member.new "test_member", service: "test", ip: '127.0.0.2', port: 80, weight: 20 }
+  let(:m2) { Services::Member.new "test_member2", service: "test", ip: '127.0.0.3', port: 80, weight: 20 }
+
 
   it "should load the test service" do
-    hashed =  @s.members.map {|m| m.to_hash}
-    hashed.should == @s_members
+    Services::Connection.new host: "localhost"
+    members = Services::Service.new("test").members
+    members.length.should eql 2
+    members[0].to_hash.should eql m1.to_hash
+    members[1].to_hash.should eql m2.to_hash
   end
 
   it "should handle non-existant services" do
-    a = Services::Service.new "should_not_exist"
+    expect {Services::Service.new "should_not_exist"}.to_not raise_error
   end
 end

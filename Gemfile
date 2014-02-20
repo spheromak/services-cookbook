@@ -4,6 +4,7 @@ source  'https://rubygems.org'
 gem 'berkshelf'
 
 group 'develop' do
+  gem 'etcd', '>= 0.0.6'
   gem 'test-kitchen'
   gem 'kitchen-vagrant'
   gem 'rake'

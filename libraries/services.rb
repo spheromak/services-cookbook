@@ -35,6 +35,7 @@ module Services
       services = []
       get(KEY).each do |s|
         name = File.basename s.key
+        puts "loading #{name}"
         services << Services::Service.new(name)
       end
       services

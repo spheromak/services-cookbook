@@ -133,11 +133,11 @@ module Services
     #
     def try_connect(server)
       c = ::Etcd.client(host: server, port: port)
-      puts "ETCD: trying to connect to #{c.host}:#{c.port}"
       begin
         c.get '/_etcd/machines'
         return c
       rescue
+        puts "ETCD: failed to connect to #{c.host}:#{c.port}"
         return nil
       end
     end
