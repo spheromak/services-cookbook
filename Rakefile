@@ -19,24 +19,6 @@ namespace :test do
   end
 
   begin
-    require 'cane/rake_task'
-
-    desc "Run cane to check quality metrics"
-    Cane::RakeTask.new(:quality) do |cane|
-      canefile = ".cane"
-      cane.abc_max = 15
-      cane.abc_glob =  '{recipes,libraries,resources,providers}/**/*.rb'
-      cane.no_style = true
-      cane.parallel = true
-      cane.abc_exclude = %w{ LoadBalancer::Attribs#to_attribs }
-    end
-
-    task :default => :quality
-  rescue LoadError
-    warn "cane not available, quality task not provided."
-  end
-
-  begin
     require 'foodcritic'
 
     task :default => [:foodcritic]
@@ -47,20 +29,13 @@ namespace :test do
     warn "Foodcritic Is missing ZOMG"
   end
 
-  begin
-    require 'tailor/rake_task'
-    Tailor::RakeTask.new
-  rescue LoadError
-    warn "Tailor gem not installed, now the code will look like crap!"
-  end
+
 
 
   desc 'Run all of the quick tests.'
   task :quick do
-    Rake::Task['test:quality'].invoke
     Rake::Task['test:foodcritic'].invoke
     Rake::Task['test:spec'].invoke
-    Rake::Task['test:tailor'].invoke
   end
 
 
@@ -73,14 +48,5 @@ namespace :test do
   desc 'Run CI tests'
   task :ci do
     Rake::Task['test:complete'].invoke
-  end
-end
-
-
-namespace :release do
-  task :update_metadata do
-  end
-
-  task :tag_release do
   end
 end
