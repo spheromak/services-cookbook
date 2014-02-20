@@ -31,9 +31,7 @@ module Services
     private
 
     def validate
-      unless path
-        fail RuntimeError, 'This class should be extended. Not used directly'
-      end
+      fail 'This class should be extended. Not used directly' unless path
     end
 
     def _store

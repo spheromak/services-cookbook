@@ -18,11 +18,12 @@ module Services
     #
     # Initialize etcd client
     #
-    # You should pass either a run_context or explicit host/port arguments thee run_context will take
-    # prescedence
+    # You should pass either a run_context or explicit host/port arguments
+    # the run_context will take prescedence
     #
     # @param [Hash] options
-    # @option args [Chef::RunContext] :run_context (nil) The chef run context to find things in
+    # @option args [Chef::RunContext] :run_context (nil)
+    #   The chef run context to find things in
     # @option args [String] :host (nil) The host address to connect too
     # @option args [String] :port (4001) The etcd port to connect too
     def initialize(args)
@@ -53,20 +54,19 @@ module Services
     #
     # Lazily Load the gem requirement so we can run inside chef
     #
-    # If @run_context exists it will use that to install the gem via Chefs chef_gem resource
+    # If @run_context exists it will use that to install the gem via
+    # Chefs chef_gem resource
     #
     def load_gem
-      begin
+      require 'etcd'
+    rescue LoadError
+      if run_context
+        Chef::Log.info 'etcd gem not found. attempting to install'
+        g = Chef::Resource::ChefGem.new 'etcd', run_context
+        g.version '0.0.6'
+        run_context.resource_collection.insert g
+        g.run_action :install
         require 'etcd'
-      rescue LoadError
-        if run_context
-          Chef::Log.info 'etcd gem not found. attempting to install'
-          g = Chef::Resource::ChefGem.new 'etcd', run_context
-          g.version '0.0.6'
-          run_context.resource_collection.insert g
-          g.run_action :install
-          require 'etcd'
-        end
       end
     end
 
@@ -77,13 +77,11 @@ module Services
       # need a run_context to find anything in
       return nil unless run_context
       # If there are already servers in attribs use those
-      if node.key? :etcd and node[:etcd].key? :servers
-        return node[:etcd][:servers]
-      end
+      return node[:etcd][:servers] if node.key?(:etcd) &&
+                                  node[:etcd].key?(:servers)
+
       # if we have already searched in this run use those
-      if node.run_state.key? :etcd_servers
-        return node.run_state[:etcd_servers]
-      end
+      return node.run_state[:etcd_servers] if node.run_state.key? :etcd_servers
 
       # find nodes and build array of ip's
       etcd_nodes = search(:node, search_query)
@@ -112,7 +110,8 @@ module Services
     # connect to ip/port and store in @@client
     # If given an arry of servers then try each until we
     # connect
-    #
+    # TODO: refactor
+    # rubocop:disable MethodLength
     def get_connection(servers = nil)
       c = nil
       if servers
@@ -123,7 +122,7 @@ module Services
       else
         c = try_connect host
       end
-      fail RuntimeError, 'Unable to get a valid connection to Etcd' unless c
+      fail 'Unable to get a valid connection to Etcd' unless c
       c
     end
 

@@ -4,15 +4,15 @@
 #  Uses etcd to manage state of Service Endpoint & Members
 #
 module Services
-  require_relative "connection"
-  require_relative "entity"
-  require_relative "service"
-  require_relative "endpoint"
-  require_relative "member"
+  require_relative 'connection'
+  require_relative 'entity'
+  require_relative 'service'
+  require_relative 'endpoint'
+  require_relative 'member'
 
   # this will  change or be slurped up from a config/node attrib
-  KEY="/services"
-  VERSION="1.0"
+  KEY = '/services'
+  VERSION = '1.0'
 
   #
   # Share a connection between all classess using this module
@@ -22,17 +22,17 @@ module Services
 
     def get(*args)
       Chef::Log.debug "connection.get args #{args}" unless run_context.nil?
-      connection.get *args
+      connection.get(*args)
     end
 
     def set(*args)
       Chef::Log.debug "connection.set args #{args}" unless run_context.nil?
-      connection.set *args
+      connection.set(*args)
     end
 
     # return a list of all services
     def all
-      services = Array.new
+      services = []
       get(KEY).each do |s|
         name = File.basename s.key
         services << Services::Service.new(name)
@@ -41,9 +41,9 @@ module Services
     end
 
     # return all services a node is subscribed to
-    def subscribed f=nil
+    def subscribed(f = nil)
       if f.nil? && run_context.nil?
-        raise 'param and run_context can not both be nil'
+        fail 'param and run_context can not both be nil'
       end
 
       fqdn = f.nil? ? rteraun_context.node.fqdn : f

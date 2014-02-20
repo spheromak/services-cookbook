@@ -1,6 +1,8 @@
 require_relative 'entity'
 
 module Services
+  # This is a service member usually something that
+  # would be sitting behind some VIP
   class Member < Services::Entity
     attr_accessor :ip, :port, :proto, :service, :weight
     def initialize(name, args = {})
