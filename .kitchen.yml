@@ -23,6 +23,7 @@ suites:
 
 - name: blank
   run_list:
+    - recupe[ubuntu]
     - recipe[etcd::compile_time]
     - recipe[services_test::blank]
     - recipe[services]
