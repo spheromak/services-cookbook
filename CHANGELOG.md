@@ -1,3 +1,7 @@
+### 2.0.0
+* moved to a gem
+* cookbook installs the gem as a runtime chef_gem.
+
 ### 1.2.0
 * switch to rubocop
 * update etcd gem to 0.0.6
