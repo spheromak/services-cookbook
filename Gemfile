@@ -6,7 +6,6 @@ gem 'berkshelf'
 group 'develop' do
   gem 'test-kitchen'
   gem 'kitchen-vagrant'
-  gem 'kitchen-openstack'
   gem 'rake'
   gem 'foodcritic',
       git: 'https://github.com/mlafeldt/foodcritic.git',
