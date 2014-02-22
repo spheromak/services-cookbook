@@ -11,9 +11,10 @@ suites:
   run_list:
     - recipe[curl]
     - recipe[etcd::compile_time]
-    - recipe[services_test::client]
     - recipe[services]
+    - recipe[services_test::client]
   attributes:
+    ha_disabled: true
     etcd:
       upstart:
         start_on: 'runlevel [2345]'
@@ -25,9 +26,10 @@ suites:
   run_list:
     - recupe[ubuntu]
     - recipe[etcd::compile_time]
-    - recipe[services_test::blank]
     - recipe[services]
+    - recipe[services_test::blank]
   attributes:
+    ha_disabled: true 
     etcd:
       servers:
         - 127.0.0.1

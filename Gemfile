@@ -4,8 +4,8 @@ source  'https://rubygems.org'
 gem 'berkshelf'
 
 group 'develop' do
-  gem 'etcd', '>= 0.0.6'
   gem 'test-kitchen'
+  gem 'kitchen-docker'
   gem 'kitchen-vagrant'
   gem 'rake'
   gem 'foodcritic',
@@ -14,5 +14,4 @@ group 'develop' do
   gem 'rubocop'
   gem 'knife-cookbook-doc'
   gem 'chefspec', '>= 3.2.0'
-  gem 'git'
 end
