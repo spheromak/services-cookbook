@@ -8,7 +8,7 @@ chef_gem 'jn_services' do
   version '1.0.5'
   action :install
   options(force: true)
-end
+end.run_action :install
 
 require 'services'
 
