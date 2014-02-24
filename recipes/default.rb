@@ -4,12 +4,6 @@
 #  Setup the connection with the current run_context
 #
 
-chef_gem 'etcd' do
-  action :install
-  source gem_file
-  options(force: true)
-end
-
 chef_gem 'jn_services' do
   version '1.0.5'
   action :install
