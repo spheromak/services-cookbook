@@ -1,3 +1,6 @@
+### 2.0.4
+* update to latest services gem
+
 ### 2.0.0
 * moved to a gem
 * cookbook installs the gem as a runtime chef_gem.
